@@ -61,7 +61,7 @@ public class CqrsTest {
         assertInventoryItem("iPhone", 0);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalStateException.class)
     public void removeItemsToInventory() {
         app.command.send(new CreateInventoryItem("iPhone"));
         assertInventoryItem("iPhone", 0);

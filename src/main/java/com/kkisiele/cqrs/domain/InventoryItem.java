@@ -58,7 +58,7 @@ public final class InventoryItem extends AggregateRoot {
             throw new IllegalArgumentException("Cant remove negative count from inventory");
         }
         if(c > count) {
-            throw new IllegalStateException("");
+            throw new IllegalStateException("Cant remove more than is actually in inventory");
         }
 
         applyChange(new ItemsRemovedFromInventory(id, c));
