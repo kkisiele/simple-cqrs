@@ -7,8 +7,8 @@ import java.util.*;
 public final class FakeBus implements EventPublisher, CommandSender {
     private final Map<Class<? extends Message>, List<MessageHandler>> routes = new HashMap<>();
 
-    public <T extends Message> void registerHandler(Class<T> cmd, MessageHandler<T> handler) {
-        var handlers = routes.computeIfAbsent(cmd, clazz -> new LinkedList<>());
+    public <T extends Message> void registerHandler(Class<T> clazz, MessageHandler<T> handler) {
+        var handlers = routes.computeIfAbsent(clazz, c -> new LinkedList<>());
         handlers.add(handler);
     }
 
