@@ -18,8 +18,8 @@ import static org.junit.Assert.*;
 
 public class FakeBusTest {
     private FakeBus fakeBus = new FakeBus();
-    private InMemoryEventStore eventStore = new InMemoryEventStore(fakeBus);
-    private Repository<InventoryItem> repository = new Repository<>(InventoryItem.class, eventStore);
+    private InMemoryEventStore eventStore = new InMemoryEventStore();
+    private Repository<InventoryItem> repository = new Repository<>(InventoryItem.class, eventStore, fakeBus);
     private InventoryCommandHandlers commandHandlers = new InventoryCommandHandlers(repository);
 
     @Before

@@ -10,6 +10,8 @@ import java.util.UUID;
 public abstract class AggregateRoot {
     private final List<Event> changes = new LinkedList<>();
 
+    public abstract UUID id();
+
     protected void applyChange(Event event) {
         applyChange(event, true);
     }
@@ -27,9 +29,11 @@ public abstract class AggregateRoot {
         }
     }
 
-    public Iterable<Event> uncommittedChanges() {
+    public List<Event> uncommittedChanges() {
         return Collections.unmodifiableList(changes);
     }
 
-    public abstract UUID id();
+    public void markChangesAsCommitted() {
+        changes.clear();
+    }
 }

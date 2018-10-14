@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class RepositoryTest {
-    private final Repository<InventoryItem> repository = new Repository<>(InventoryItem.class, new InMemoryEventStore(new FakeBus()));
+    private final Repository<InventoryItem> repository = new Repository<>(InventoryItem.class, new InMemoryEventStore(), new FakeBus());
 
     @Test
     public void test() {
@@ -16,5 +16,16 @@ public class RepositoryTest {
         InventoryItem inventoryItem2 = repository.getById(inventoryItem.id());
         Assert.assertEquals(inventoryItem.id(), inventoryItem2.id());
         Assert.assertEquals(inventoryItem.isActivated(), inventoryItem2.isActivated());
+    }
+
+    @Test
+    public void eventsAreCleared() {
+        InventoryItem inventoryItem = new InventoryItem("macbook");
+        Assert.assertEquals(1, inventoryItem.uncommittedChanges().size());
+
+        repository.save(inventoryItem);
+
+        Assert.assertEquals(0, inventoryItem.uncommittedChanges().size());
+
     }
 }
