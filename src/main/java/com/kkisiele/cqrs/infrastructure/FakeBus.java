@@ -4,7 +4,7 @@ import com.kkisiele.cqrs.*;
 
 import java.util.*;
 
-public class FakeBus implements EventPublisher, CommandSender {
+public final class FakeBus implements EventPublisher, CommandSender {
     private final Map<Class<? extends Message>, List<MessageHandler>> handlers = new HashMap<>();
 
     public <T extends Message> void registerHandler(Class<T> cmd, MessageHandler<T> handler) {
