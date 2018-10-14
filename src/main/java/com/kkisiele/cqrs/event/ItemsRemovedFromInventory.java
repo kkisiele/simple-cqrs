@@ -1,14 +1,14 @@
-package com.kkisiele.cqrs.command;
+package com.kkisiele.cqrs.event;
 
-import com.kkisiele.cqrs.Command;
+import com.kkisiele.cqrs.Event;
 
 import java.util.UUID;
 
-public final class CheckInItemsToInventory implements Command {
+public final class ItemsRemovedFromInventory implements Event {
     private final UUID id;
     private final int count;
 
-    public CheckInItemsToInventory(UUID id, int count) {
+    public ItemsRemovedFromInventory(UUID id, int count) {
         this.id = id;
         this.count = count;
     }

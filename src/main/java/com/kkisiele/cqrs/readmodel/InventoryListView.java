@@ -1,29 +1,25 @@
 package com.kkisiele.cqrs.readmodel;
 
-import com.kkisiele.cqrs.EventHandler;
-import com.kkisiele.cqrs.domain.InventoryItemCreated;
-import com.kkisiele.cqrs.domain.InventoryItemDeactivated;
-import com.kkisiele.cqrs.domain.InventoryItemRenamed;
+import com.kkisiele.cqrs.event.InventoryItemCreated;
+import com.kkisiele.cqrs.event.InventoryItemDeactivated;
+import com.kkisiele.cqrs.event.InventoryItemRenamed;
 
-final class InventoryListView {
+public final class InventoryListView {
     private final BullShitDatabase database;
 
     public InventoryListView(BullShitDatabase database) {
         this.database = database;
     }
 
-    @EventHandler
-    private void handle(InventoryItemCreated event) {
+    public void handle(InventoryItemCreated event) {
         database.list.add(new InventoryItemListDto(event.id(), event.name()));
     }
 
-    @EventHandler
-    private void handle(InventoryItemDeactivated event) {
+    public void handle(InventoryItemDeactivated event) {
         database.list.removeIf(inventoryItem -> inventoryItem.id == event.id());
     }
 
-    @EventHandler
-    private void handle(InventoryItemRenamed event) {
+    public void handle(InventoryItemRenamed event) {
         InventoryItemListDto itemList = database.list
                 .stream()
                 .filter(inventoryItem -> inventoryItem.id == event.id())

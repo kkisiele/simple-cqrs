@@ -1,5 +1,7 @@
 package com.kkisiele.cqrs.command;
 
+import com.kkisiele.cqrs.Command;
+
 public final class CreateInventoryItem implements Command {
     private final String name;
 

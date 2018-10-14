@@ -1,7 +1,8 @@
 package com.kkisiele.cqrs.domain;
 
-import com.kkisiele.cqrs.EventHandle;
+import com.kkisiele.cqrs.Event;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,16 +18,26 @@ public abstract class AggregateRoot {
     }
 
     protected void applyChange(Event event, boolean isNew) {
-        new EventHandle(this).dispatch(event);
+        handle(event);
         if(isNew) {
             changes.add(event);
         }
     }
 
-    public void loadFromEvents(Iterable<Event> events) {
-        for(Event event : events) {
-            applyChange(event, false);
+    private void handle(Event event) {
+        try {
+            Method method = getClass().getDeclaredMethod("handle", event.getClass());
+            method.setAccessible(true);
+            method.invoke(this, event);
+        } catch (NoSuchMethodException ex) {
+            //that is ok
+        } catch (Exception ex) {
+            throw new RuntimeException("Error dispatching to event handler", ex);
         }
+    }
+
+    public void loadFromEvents(Iterable<Event> events) {
+        events.forEach(event -> applyChange(event, false));
     }
 
     public List<Event> uncommittedChanges() {

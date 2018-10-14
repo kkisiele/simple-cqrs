@@ -1,4 +1,4 @@
 package com.kkisiele.cqrs.domain;
 
-public class AggregateNotFoundException extends RuntimeException {
+public final class AggregateNotFoundException extends RuntimeException {
 }

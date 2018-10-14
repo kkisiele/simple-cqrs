@@ -1,5 +1,7 @@
 package com.kkisiele.cqrs.command;
 
+import com.kkisiele.cqrs.Command;
+
 import java.util.UUID;
 
 public final class RenameInventoryItem implements Command {

@@ -1,4 +1,6 @@
-package com.kkisiele.cqrs.domain;
+package com.kkisiele.cqrs.event;
+
+import com.kkisiele.cqrs.Event;
 
 import java.util.UUID;
 

@@ -1,12 +1,13 @@
 package com.kkisiele.cqrs.domain;
 
-import com.kkisiele.cqrs.EventHandler;
+import com.kkisiele.cqrs.event.*;
 
 import java.util.UUID;
 
 public final class InventoryItem extends AggregateRoot {
     private UUID id;
     private boolean activated;
+    private int count;
 
     public InventoryItem() {
     }
@@ -15,10 +16,10 @@ public final class InventoryItem extends AggregateRoot {
         applyChange(new InventoryItemCreated(UUID.randomUUID(), name));
     }
 
-    @EventHandler
     private void handle(InventoryItemCreated event) {
         id = event.id();
         activated = true;
+        count = 0;
     }
 
     @Override
@@ -37,16 +38,34 @@ public final class InventoryItem extends AggregateRoot {
         applyChange(new InventoryItemDeactivated(id));
     }
 
-    @EventHandler
     private void handle(InventoryItemDeactivated event) {
         activated = false;
     }
 
-    public void checkIn(int count) {
-        if(count <= 0) {
+    public void checkIn(int c) {
+        if(c <= 0) {
             throw new IllegalArgumentException("Must have a count greater than 0 to add to inventory");
         }
-        applyChange(new ItemsCheckedInToInventory(id, count));
+        applyChange(new ItemsCheckedInToInventory(id, c));
+    }
+
+    private void handle(ItemsCheckedInToInventory event) {
+        count += event.count();
+    }
+
+    public void remove(int c) {
+        if(c <= 0) {
+            throw new IllegalArgumentException("Cant remove negative count from inventory");
+        }
+        if(c > count) {
+            throw new IllegalStateException("");
+        }
+
+        applyChange(new ItemsRemovedFromInventory(id, c));
+    }
+
+    private void handle(ItemsRemovedFromInventory event) {
+        count -= event.count();
     }
 
     public void changeName(String newName) {

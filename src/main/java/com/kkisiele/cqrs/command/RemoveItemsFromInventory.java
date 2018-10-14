@@ -4,11 +4,11 @@ import com.kkisiele.cqrs.Command;
 
 import java.util.UUID;
 
-public final class CheckInItemsToInventory implements Command {
+public final class RemoveItemsFromInventory implements Command {
     private final UUID id;
     private final int count;
 
-    public CheckInItemsToInventory(UUID id, int count) {
+    public RemoveItemsFromInventory(UUID id, int count) {
         this.id = id;
         this.count = count;
     }
