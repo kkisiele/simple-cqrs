@@ -1,5 +1,6 @@
 package com.kkisiele.cqrs.infrastructure;
 
+import com.kkisiele.cqrs.EventPublisher;
 import com.kkisiele.cqrs.domain.AggregateNotFoundException;
 import com.kkisiele.cqrs.Event;
 

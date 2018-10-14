@@ -10,64 +10,64 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class FacadeTest {
+public class CqrsTest {
     private final Application app = new Application();
 
     @Test
     public void createInventoryItem() {
-        app.bus.send(new CreateInventoryItem("iPhone"));
+        app.command.send(new CreateInventoryItem("iPhone"));
 
         assertInventoryItem("iPhone", 0);
     }
 
     @Test
     public void deactivateInventoryItem() {
-        app.bus.send(new CreateInventoryItem("iPhone"));
+        app.command.send(new CreateInventoryItem("iPhone"));
         assertInventoryItem("iPhone", 0);
 
         UUID id = app.readModelFacade.getInventoryItems().get(0).id;
-        app.bus.send(new DeactivateInventoryItem(id));
+        app.command.send(new DeactivateInventoryItem(id));
         assertEquals(0, app.readModelFacade.getInventoryItems().size());
         assertNull(app.readModelFacade.getInventoryItemDetails(id));
     }
 
     @Test
     public void renameInventoryItem() {
-        app.bus.send(new CreateInventoryItem("iPhone"));
+        app.command.send(new CreateInventoryItem("iPhone"));
         assertInventoryItem("iPhone", 0);
 
         UUID id = app.readModelFacade.getInventoryItems().get(0).id;
-        app.bus.send(new RenameInventoryItem(id, "iPhoneX"));
+        app.command.send(new RenameInventoryItem(id, "iPhoneX"));
         assertInventoryItem("iPhoneX", 0);
     }
 
     @Test
     public void checkInAndRemoveItemsToInventory() {
-        app.bus.send(new CreateInventoryItem("iPhone"));
+        app.command.send(new CreateInventoryItem("iPhone"));
         assertInventoryItem("iPhone", 0);
 
         UUID id = app.readModelFacade.getInventoryItems().get(0).id;
 
-        app.bus.send(new CheckInItemsToInventory(id, 3));
+        app.command.send(new CheckInItemsToInventory(id, 3));
         assertInventoryItem("iPhone", 3);
 
-        app.bus.send(new CheckInItemsToInventory(id, 2));
+        app.command.send(new CheckInItemsToInventory(id, 2));
         assertInventoryItem("iPhone", 5);
 
-        app.bus.send(new RemoveItemsFromInventory(id, 1));
+        app.command.send(new RemoveItemsFromInventory(id, 1));
         assertInventoryItem("iPhone", 4);
 
-        app.bus.send(new RemoveItemsFromInventory(id, 4));
+        app.command.send(new RemoveItemsFromInventory(id, 4));
         assertInventoryItem("iPhone", 0);
     }
 
     @Test(expected = Exception.class)
     public void removeItemsToInventory() {
-        app.bus.send(new CreateInventoryItem("iPhone"));
+        app.command.send(new CreateInventoryItem("iPhone"));
         assertInventoryItem("iPhone", 0);
 
         UUID id = app.readModelFacade.getInventoryItems().get(0).id;
-        app.bus.send(new RemoveItemsFromInventory(id, 1));
+        app.command.send(new RemoveItemsFromInventory(id, 1));
     }
 
     private void assertInventoryItem(String name, int count) {

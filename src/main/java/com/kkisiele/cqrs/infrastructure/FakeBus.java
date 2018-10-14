@@ -1,8 +1,6 @@
 package com.kkisiele.cqrs.infrastructure;
 
-import com.kkisiele.cqrs.Message;
-import com.kkisiele.cqrs.Command;
-import com.kkisiele.cqrs.Event;
+import com.kkisiele.cqrs.*;
 
 import java.util.*;
 

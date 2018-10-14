@@ -1,4 +1,4 @@
-package com.kkisiele.cqrs.infrastructure;
+package com.kkisiele.cqrs;
 
 import com.kkisiele.cqrs.Command;
 
