@@ -10,7 +10,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class CqrsTest {
+public class ApplicationTest {
     private final Application app = new Application();
 
     @Test
