@@ -9,7 +9,8 @@ public final class ReadModelFacade {
     private final BullShitDatabase database = new BullShitDatabase();
 
     public ReadModelFacade(FakeBus bus) {
-        new InventoryListView(bus, database);
+        bus.registerEventHandlers(new InventoryListView(database));
+        bus.registerEventHandlers(new InventoryItemDetailView(database));
     }
 
     public List<InventoryItemListDto> getInventoryItems() {

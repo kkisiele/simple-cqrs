@@ -25,6 +25,11 @@ public class InventoryCommandHandlers {
         var item = repository.getById(command.id());
         item.checkIn(command.count());
         repository.save(item);
+    }
 
+    public void handle(RenameInventoryItem command) {
+        var item = repository.getById(command.id());
+        item.changeName(command.newName());
+        repository.save(item);
     }
 }

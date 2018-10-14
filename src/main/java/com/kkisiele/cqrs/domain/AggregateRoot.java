@@ -1,6 +1,7 @@
 package com.kkisiele.cqrs.domain;
 
-import java.lang.reflect.Method;
+import com.kkisiele.cqrs.EventHandle;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,25 +15,9 @@ public abstract class AggregateRoot {
     }
 
     protected void applyChange(Event event, boolean isNew) {
-        invokeEventHandler(event);
+        new EventHandle(this).dispatch(event);
         if(isNew) {
             changes.add(event);
-        }
-    }
-
-    private void invokeEventHandler(Event event) {
-        for(Method method : getClass ().getDeclaredMethods()) {
-            if(method.getAnnotation(EventHandler.class) != null
-                    && method.getParameterTypes().length == 1
-                    && method.getParameterTypes()[0] == event.getClass()) {
-                try {
-                    method.setAccessible(true);
-                    method.invoke(this, event);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-                return;
-            }
         }
     }
 

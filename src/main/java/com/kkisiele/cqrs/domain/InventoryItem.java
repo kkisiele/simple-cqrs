@@ -1,5 +1,7 @@
 package com.kkisiele.cqrs.domain;
 
+import com.kkisiele.cqrs.EventHandler;
+
 import java.util.UUID;
 
 public final class InventoryItem extends AggregateRoot {
@@ -45,5 +47,12 @@ public final class InventoryItem extends AggregateRoot {
             throw new IllegalArgumentException("Must have a count greater than 0 to add to inventory");
         }
         applyChange(new ItemsCheckedInToInventory(id, count));
+    }
+
+    public void changeName(String newName) {
+        if(newName == null || newName.trim().length() == 0) {
+            throw new IllegalArgumentException("Name must be provided");
+        }
+        applyChange(new InventoryItemRenamed(id, newName));
     }
 }

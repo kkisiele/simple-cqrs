@@ -15,12 +15,12 @@ import static org.junit.Assert.assertEquals;
 public class InventoryItemDetailViewTest {
     private final BullShitDatabase database = new BullShitDatabase();
     private final FakeBus bus = new FakeBus();
-    private final InventoryItemDetailView detailView = new InventoryItemDetailView(bus, database);
     private UUID id;
 
     @Before
     public void setup() {
         id = UUID.randomUUID();
+        bus.registerEventHandlers(new InventoryItemDetailView(database));
         bus.publish(new InventoryItemCreated(id, "iphone"));
     }
 
