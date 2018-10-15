@@ -18,13 +18,13 @@ public abstract class AggregateRoot {
     }
 
     protected void applyChange(Event event, boolean isNew) {
-        handle(event);
+        dispatch(event);
         if(isNew) {
             changes.add(event);
         }
     }
 
-    private void handle(Event event) {
+    private void dispatch(Event event) {
         try {
             Method method = getClass().getDeclaredMethod("handle", event.getClass());
             method.setAccessible(true);
