@@ -27,10 +27,6 @@ public final class InventoryItem extends AggregateRoot {
         return id;
     }
 
-    public boolean isActivated() {
-        return activated;
-    }
-
     public void deactivate() {
         if(!activated) {
             throw new IllegalStateException("Already deactivated");
