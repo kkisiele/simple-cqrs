@@ -1,6 +1,6 @@
 package com.kkisiele.cqrs.readmodel;
 
-import com.kkisiele.cqrs.event.*;
+import com.kkisiele.cqrs.domain.*;
 
 public final class InventoryItemDetailView {
     private final BullShitDatabase database;

@@ -1,8 +1,8 @@
 package com.kkisiele.cqrs.readmodel;
 
-import com.kkisiele.cqrs.event.InventoryItemCreated;
-import com.kkisiele.cqrs.event.InventoryItemDeactivated;
-import com.kkisiele.cqrs.event.InventoryItemRenamed;
+import com.kkisiele.cqrs.domain.InventoryItemCreated;
+import com.kkisiele.cqrs.domain.InventoryItemDeactivated;
+import com.kkisiele.cqrs.domain.InventoryItemRenamed;
 
 public final class InventoryListView {
     private final BullShitDatabase database;

@@ -1,9 +1,7 @@
 package com.kkisiele.cqrs;
 
 import com.kkisiele.cqrs.command.*;
-import com.kkisiele.cqrs.domain.InventoryItem;
-import com.kkisiele.cqrs.domain.Repository;
-import com.kkisiele.cqrs.event.*;
+import com.kkisiele.cqrs.domain.*;
 import com.kkisiele.cqrs.infrastructure.FakeBus;
 import com.kkisiele.cqrs.infrastructure.InMemoryEventStore;
 import com.kkisiele.cqrs.readmodel.BullShitDatabase;

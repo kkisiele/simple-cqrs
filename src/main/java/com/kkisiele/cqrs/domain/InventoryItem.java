@@ -1,7 +1,5 @@
 package com.kkisiele.cqrs.domain;
 
-import com.kkisiele.cqrs.event.*;
-
 import java.util.UUID;
 
 public final class InventoryItem extends AggregateRoot {

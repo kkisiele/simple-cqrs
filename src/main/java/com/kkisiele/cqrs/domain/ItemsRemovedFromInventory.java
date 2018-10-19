@@ -1,4 +1,4 @@
-package com.kkisiele.cqrs.event;
+package com.kkisiele.cqrs.domain;
 
 import com.kkisiele.cqrs.Event;
 
